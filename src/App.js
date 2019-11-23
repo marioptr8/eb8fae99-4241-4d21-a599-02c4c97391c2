@@ -1,16 +1,43 @@
-import React, { Component } from 'react';
-import { actions } from './_helper/actions';
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter, Link, Route, Switch, useParams } from "react-router-dom"
+import WeatherCard from './WeatherCard'
 
-export default class App extends Component {
+const cities = [
+  { name: 'Milano', id: '3173435' },
+  { name: 'Berlino', id: '6545310' },
+]
 
-  componentDidMount = () => {
+export default function App() {
+  let urlActive = window.location.pathname
+  return (
+    <BrowserRouter forceRefresh={true}>
+      <div className="container">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mt-5 boxShadow">
+          <ul className="navbar-nav">
+            <li className={"nav-item " + (urlActive === "/today" ? "active": "")}>
+              <Link className="nav-link" to="/today">Today</Link>
+            </li>
+            <li className={"nav-item " + (urlActive === "/tomorrow" ? "active": "")}>
+              <Link className="nav-link" to="/tomorrow">Tomorrow</Link>
+            </li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route path="/:day" children={<ShowForecasts/>}/>
+        </Switch>
+      </div>
+    </BrowserRouter>
+  )
+}
 
-  }
 
-	render = () => {
-		return (
-      "ciao"
-		);
-	}
+function ShowForecasts() {
+  let { day } = useParams();
+  return (
+    <div className="row">{
+      cities.map( (city, i) => (
+        <WeatherCard key={i} cityName={city.name} cityId={city.id} day={day}/>
+      ))
+    }</div>
+  )
 }

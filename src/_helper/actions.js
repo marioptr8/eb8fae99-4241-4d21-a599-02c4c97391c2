@@ -1,6 +1,8 @@
 export const actions = {
-  retrieveCurrentWeather
+  retrieveWeather
 }
+
+const apiKey = "637bb86c7e461caddfdcfee5cbd71a1c"
 
 function userVerification(response) {
   if (!response.ok || response.status !== 200) {
@@ -8,7 +10,6 @@ function userVerification(response) {
   }
   return response.json();
 }
-
 function dataReturn(data) {
   if (!data) {
     var errorMsg = "Si è verificato un errore"
@@ -16,20 +17,14 @@ function dataReturn(data) {
   }
   return data;
 }
-
 function printError(err) {
   throw err;
 }
 
-/*******************************************************************************
-  LISTA ANNI ACCADEMICI
-*******************************************************************************/
 
-function retrieveCurrentWeather (cityId) {
-  const url = "api.openweathermap.org/data/2.5/weather?id=" + cityId
-  const requestOptions = {
-    method: "GET"
-  };
+function retrieveWeather (cityId) {
+  const url = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&units=metric&appid=" + apiKey
+  const requestOptions = { method: "GET" };
   return fetch(url, requestOptions)
     .then(userVerification)
     .then(dataReturn)

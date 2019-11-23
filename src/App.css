@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
-.paper {
-  padding: 20px;
+.boxShadow {
+  box-shadow: 4px 7px 10px -5px grey;
+}
+
+.weatherIcon {
+  font-size: 5rem;
 }
